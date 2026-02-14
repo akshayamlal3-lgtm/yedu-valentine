@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For Yedu ❤️</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: black;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+    }
+    #intro {
+      position: absolute;
+      text-align: center;
+      animation: fadeIn 3s ease-in-out forwards;
+    }
+    #intro h1 {
+      font-size: 3em;
+      opacity: 0;
+      animation: zoomIn 3s forwards;
+    }
+    #intro p {
+      opacity: 0;
+      animation: fadeIn 2s forwards;
+      animation-delay: 2s;
+    }
+    @keyframes zoomIn {
+      0% { opacity: 0; transform: scale(0.5); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .box {
+      display: none;
+      background: white;
+      color: black;
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(255,0,100,0.5);
+    }
+    h2 { color: #e91e63; }
+    button {
+      padding: 12px 25px;
+      margin: 10px;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    #yes { background: #e91e63; color: white; }
+    #yes:hover { transform: scale(1.1); }
+    #no { background: gray; color: white; }
+    .heart { position: absolute; font-size: 20px; pointer-events: none; }
+  </style>
+</head>
+<body>
+
+  <div id="intro">
+    <h1>Yedu ❤️</h1>
+    <p>This is something special for you...</p>
+  </div>
+
+  <div class="box" id="box">
+    <h2>Will you be my Valentine? ❤️</h2>
+    <button id="yes">Yes ❤️</button>
+    <button id="no">No 💔</button>
+  </div>
+
+  <script>
+    setTimeout(() => {
+      document.getElementById("intro").style.display = "none";
+      document.getElementById("box").style.display = "block";
+      document.body.style.background =
+        "linear-gradient(to bottom right, #ff758c, #ff7eb3)";
+    }, 5000);
+
+    const yesBtn = document.getElementById("yes");
+    const noBtn = document.getElementById("no");
+    let noScale = 1;
+
+    noBtn.addEventListener("click", () => {
+      noScale -= 0.15;
+      if (noScale > 0) { noBtn.style.transform = `scale(${noScale})`; }
+      else { noBtn.style.display = "none"; }
+    });
+
+    yesBtn.addEventListener("click", () => {
+      document.getElementById("box").innerHTML =
+        "<h2>Yedu ❤️ I love you forever!</h2><p>Happy Valentine's Day 💕</p>";
+      heartExplosion();
+    });
+
+    function heartExplosion() {
+      for (let i = 0; i < 60; i++) {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "❤️";
+        document.body.appendChild(heart);
+
+        const x = window.innerWidth / 2;
+        const y = window.innerHeight / 2;
+        heart.style.left = x + "px";
+        heart.style.top = y + "px";
+
+        const angle = Math.random() * 2 * Math.PI;
+        const distance = 200 + Math.random() * 200;
+        const moveX = Math.cos(angle) * distance;
+        const moveY = Math.sin(angle) * distance;
+
+        heart.animate(
+          [
+            { transform: "translate(0,0)", opacity: 1 },
+            { transform: `translate(${moveX}px, ${moveY}px)`, opacity: 0 }
+          ],
+          { duration: 1500, easing: "ease-out" }
+        );
+
+        setTimeout(() => heart.remove(), 1500);
+      }
+    }
+  </script>
+
+</body>
+</html>
